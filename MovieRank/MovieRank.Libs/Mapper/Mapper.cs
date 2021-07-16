@@ -1,4 +1,5 @@
 ﻿using Amazon.DynamoDBv2.DocumentModel;
+using Amazon.DynamoDBv2.Model;
 using MovieRank.Contracts;
 using MovieRank.Libs.Models;
 using System;
@@ -17,6 +18,16 @@ namespace MovieRank.Libs.Mapper
         public IEnumerable<MovieResponse> ToMovieContract(IEnumerable<Document> items)
         {
             return items.Select(ToMovieContract);
+        }
+
+        public IEnumerable<MovieResponse> ToMovieContract(ScanResponse response)
+        {
+            return response.Items.Select(ToMovieContract);
+        }
+
+        public IEnumerable<MovieResponse> ToMovieContract(QueryResponse response)
+        {
+            return response.Items.Select(ToMovieContract);
         }
 
         public MovieResponse ToMovieContract(MovieDb item)
@@ -40,6 +51,30 @@ namespace MovieRank.Libs.Mapper
                 Actors = item["Actors"].AsListOfString(),
                 Ranking = Convert.ToInt32(item["Ranking"]),
                 TimeRanked = item["RankedDateTime"]
+            };
+        }
+
+        public MovieResponse ToMovieContract(Dictionary<string, AttributeValue> item)
+        {
+            return new MovieResponse
+            {
+                MovieName = item["MovieName"].S,
+                Description = item["Description"].S,
+                Actors = item["Actors"].SS,
+                Ranking = Convert.ToInt32(item["Ranking"].N),
+                TimeRanked = item["RankedDateTime"].S
+            };
+        }
+
+        public MovieResponse ToMovieContract(GetItemResponse response)
+        {
+            return new MovieResponse
+            {
+                MovieName = response.Item["MovieName"].S,
+                Description = response.Item["Description"].S,
+                Actors = response.Item["Actors"].SS,
+                Ranking = Convert.ToInt32(response.Item["Ranking"].N),
+                TimeRanked = response.Item["RankedDateTime"].S
             };
         }
 

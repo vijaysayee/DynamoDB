@@ -41,9 +41,11 @@ namespace MovieRank
                     Region = Amazon.RegionEndpoint.USEast2
                 });
 
+            services.AddSingleton<ISetupService, SetupService>();
             //services.AddSingleton<IMovieRankService, MovieRankService>();
             services.AddSingleton<IMovieRankService, MovieRankDocumentService>();
             services.AddSingleton<IMovieRankRepository<MovieDb>, MovieRankRepository>();
+            services.AddSingleton<IMovieRankLowLevelRepository, MovieRankLowLevelRepository>();
             services.AddSingleton<IMovieRankRepository<Document>, MovieRankDocumentRepository>();
             services.AddSingleton<IMapper, Mapper>();
         }
