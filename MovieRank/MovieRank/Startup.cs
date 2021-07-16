@@ -1,4 +1,5 @@
 using Amazon.DynamoDBv2;
+using Amazon.DynamoDBv2.DocumentModel;
 using Amazon.Extensions.NETCore.Setup;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MovieRank.Libs.Mapper;
+using MovieRank.Libs.Models;
 using MovieRank.Libs.Repositories;
 using MovieRank.Services;
 using System;
@@ -39,8 +41,10 @@ namespace MovieRank
                     Region = Amazon.RegionEndpoint.USEast2
                 });
 
-            services.AddSingleton<IMovieRankService, MovieRankService>();
-            services.AddSingleton<IMovieRankRepository, MovieRankRepository>();
+            //services.AddSingleton<IMovieRankService, MovieRankService>();
+            services.AddSingleton<IMovieRankService, MovieRankDocumentService>();
+            services.AddSingleton<IMovieRankRepository<MovieDb>, MovieRankRepository>();
+            services.AddSingleton<IMovieRankRepository<Document>, MovieRankDocumentRepository>();
             services.AddSingleton<IMapper, Mapper>();
         }
 

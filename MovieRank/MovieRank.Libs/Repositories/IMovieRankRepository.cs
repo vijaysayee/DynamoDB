@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 
 namespace MovieRank.Libs.Repositories
 {
-    public interface IMovieRankRepository
+    public interface IMovieRankRepository<T>
     {
-        Task<IEnumerable<MovieDb>> GetAllItems();
-        Task<MovieDb> GetMovie(int userId, string movieName);
-        Task<IEnumerable<MovieDb>> GetUsersRankedMoviesByMovieTitle(int userId, string movieName);
-        Task AddMovie(MovieDb movieDb);
-        Task UpdateMovie(MovieDb movieDb);
-        Task<IEnumerable<MovieDb>> GetMovieRank(string movieName);
+        Task<IEnumerable<T>> GetAllItems();
+        Task<T> GetMovie(int userId, string movieName);
+        Task<IEnumerable<T>> GetUsersRankedMoviesByMovieTitle(int userId, string movieName);
+        Task AddMovie(T movieDb);
+        Task UpdateMovie(T movieDb);
+        Task<IEnumerable<T>> GetMovieRank(string movieName);
     }
 }

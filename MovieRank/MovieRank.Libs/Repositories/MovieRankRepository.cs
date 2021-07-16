@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MovieRank.Libs.Repositories
 {
-    public class MovieRankRepository : IMovieRankRepository
+    public class MovieRankRepository : IMovieRankRepository<MovieDb>
     {
         private readonly DynamoDBContext dbContext;
 

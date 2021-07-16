@@ -1,6 +1,6 @@
-﻿using MovieRank.Contracts;
+﻿using Amazon.DynamoDBv2.DocumentModel;
+using MovieRank.Contracts;
 using MovieRank.Libs.Mapper;
-using MovieRank.Libs.Models;
 using MovieRank.Libs.Repositories;
 using System;
 using System.Collections.Generic;
@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace MovieRank.Services
 {
-    public class MovieRankService : IMovieRankService
+    public class MovieRankDocumentService : IMovieRankService
     {
-        private readonly IMovieRankRepository<MovieDb> movieRankRepository;
+        private readonly IMovieRankRepository<Document> movieRankRepository;
         private readonly IMapper mapper;
 
-        public MovieRankService(IMovieRankRepository<MovieDb> movieRankRepository, IMapper mapper)
+        public MovieRankDocumentService(IMovieRankRepository<Document> movieRankRepository, IMapper mapper)
         {
             this.movieRankRepository = movieRankRepository;
             this.mapper = mapper;
@@ -22,8 +22,8 @@ namespace MovieRank.Services
 
         public async Task AddMovie(int userId, MovieRankRequest movieRankRequest)
         {
-            var movieDb = mapper.ToMovieDbModel(userId, movieRankRequest);
-            await movieRankRepository.AddMovie(movieDb);
+            var document = mapper.ToDocumentModel(userId, movieRankRequest);
+            await movieRankRepository.AddMovie(document);
         }
 
         public async Task<IEnumerable<MovieResponse>> GetAllItemsFromDatabase()
@@ -44,7 +44,7 @@ namespace MovieRank.Services
         {
             var response = await movieRankRepository.GetMovieRank(movieName);
 
-            var overllMovieRanking = Math.Round(response.Select(x => x.Ranking).Average());
+            var overllMovieRanking = Math.Round(response.Select(x => x["Ranking"].AsInt()).Average());
 
             return new MovieRankResponse { MovieName = movieName, OverallRanking = overllMovieRanking };
         }
@@ -58,11 +58,11 @@ namespace MovieRank.Services
 
         public async Task UpdateMovie(int userId, MovieRankRequest movieRankRequest)
         {
-            var response = await movieRankRepository.GetMovie(userId, movieRankRequest.MovieName);
+            var currentDocument = await movieRankRepository.GetMovie(userId, movieRankRequest.MovieName);
 
-            var movieDb = mapper.ToMovieDbModel(userId, response, movieRankRequest);
+            var document = mapper.ToDocumentModel(userId, currentDocument, movieRankRequest);
 
-            await movieRankRepository.UpdateMovie(movieDb);
+            await movieRankRepository.UpdateMovie(document);
         }
     }
 }
