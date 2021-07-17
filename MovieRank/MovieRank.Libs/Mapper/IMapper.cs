@@ -28,8 +28,8 @@ namespace MovieRank.Libs.Mapper
 
         Document ToDocumentModel(int userId, MovieRankRequest movieRankRequest);
 
-        MovieDb ToMovieDbModel(int userId, MovieDb response, MovieRankRequest movieRankRequest);
+        MovieDb ToMovieDbModel(int userId, MovieDb response, MovieUpdateRequest movieRankRequest);
 
-        Document ToDocumentModel(int userId, Document document, MovieRankRequest movieRankRequest);
+        Document ToDocumentModel(int userId, Document document, MovieUpdateRequest movieRankRequest);
     }
 }

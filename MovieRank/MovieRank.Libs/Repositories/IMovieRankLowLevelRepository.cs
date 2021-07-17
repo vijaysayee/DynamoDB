@@ -14,7 +14,7 @@ namespace MovieRank.Libs.Repositories
 
         Task AddMovie(int userId, MovieRankRequest movieRankRequest);
 
-        Task UpdateMovie(int userId, MovieRankRequest movieRankRequest);
+        Task UpdateMovie(int userId, MovieUpdateRequest movieRankRequest);
 
         Task<QueryResponse> GetMovieRank(string movieName);
 

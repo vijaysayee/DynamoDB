@@ -104,7 +104,7 @@ namespace MovieRank.Libs.Mapper
             };
         }
 
-        public MovieDb ToMovieDbModel(int userId, MovieDb movieDb, MovieRankRequest movieRankRequest)
+        public MovieDb ToMovieDbModel(int userId, MovieDb movieDb, MovieUpdateRequest movieRankRequest)
         {
             return new MovieDb
             {
@@ -117,7 +117,7 @@ namespace MovieRank.Libs.Mapper
             };
         }
 
-        public Document ToDocumentModel(int userId, Document document, MovieRankRequest movieRankRequest)
+        public Document ToDocumentModel(int userId, Document document, MovieUpdateRequest movieRankRequest)
         {
             return new Document
             {

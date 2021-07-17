@@ -50,7 +50,7 @@ namespace MovieRank.Controllers
         }
 
         [HttpPatch("{userId}")]
-        public async Task<IActionResult> UpdateMovie(int userId, [FromBody] MovieRankRequest movieRankRequest)
+        public async Task<IActionResult> UpdateMovie(int userId, [FromBody] MovieUpdateRequest movieRankRequest)
         {
             await movieRankService.UpdateMovie(userId, movieRankRequest);
 

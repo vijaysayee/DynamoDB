@@ -77,7 +77,7 @@ namespace MovieRank.Libs.Repositories
             await dynamoDbClient.PutItemAsync(putRequest);
         }
 
-        public async Task UpdateMovie(int userId, MovieRankRequest movieRankRequest)
+        public async Task UpdateMovie(int userId, MovieUpdateRequest movieRankRequest)
         {
             var updateRequest = new UpdateItemRequest
             {
@@ -90,7 +90,6 @@ namespace MovieRank.Libs.Repositories
                 AttributeUpdates = new Dictionary<string, AttributeValueUpdate>
                 {
                     { "Ranking", new AttributeValueUpdate { Action = AttributeAction.PUT, Value = new AttributeValue { N = movieRankRequest.Ranking.ToString() } } },
-                    { "Ranking", new AttributeValueUpdate { Action = AttributeAction.PUT, Value = new AttributeValue { SS = movieRankRequest.Actors } } },
                 }
             };
 

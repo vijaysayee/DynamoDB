@@ -57,7 +57,7 @@ namespace MovieRank.Services
             return mapper.ToMovieContract(response);
         }
 
-        public async Task UpdateMovie(int userId, MovieRankRequest movieRankRequest)
+        public async Task UpdateMovie(int userId, MovieUpdateRequest movieRankRequest)
         {
             await movieRankRepository.UpdateMovie(userId, movieRankRequest);
         }
